@@ -4,14 +4,7 @@ import copy
 
 def adaptevitesserelat (Mm1,M,MMMR,alpha,v,deltat,rmax):
     
-    "Mm1=[(thetai,ri)] liste des tuples de coordonnées lidar au temps t-dt"
-    "M=[(thetai,ri)] liste des tuples de coordonnées lidar"
-    "MMR=[(thetai,ri,xi,yi)]"
-    "MMMR=[(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m"
-    "mmmr=[(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m des pi entre -alpha et alpha"
-    "deltat=intervalle de temps entre deux mesures lidar"
-    "mmmrc=[(thetai,ri,xi,yi,xpi,ypi,xpprimi,ypprimi)] ou pprim est le point pi repositionné en foncion de sa vitesse relative (vrai que pour les pi dans le cone alpla -alpha les autres sont inchangés)"
-    "MMMRC=[(thetai,ri,xi,yi,xpi ou xpprimi,ypi ou ypprimi)]"
+
     mmmr=[]
     mmmrc=[]
     MMMRC=copy.deepcopy(MMMR)
@@ -32,13 +25,13 @@ def adaptevitesserelat (Mm1,M,MMMR,alpha,v,deltat,rmax):
     while i<nnn:
         theta=mmmr[i][0]
         theta=int(theta)
-        vrel=(M[theta][1]-Mm1[int((acos(v*deltat/M[theta][1]/(1-cos(theta*2*pi/360)/max(sin(theta*2*pi/360),0.01))))*360/(2*pi))][1])/deltat #approx de la dérivée de la distance à l'objet par rapport au temps"   ATTENTION REMPLACER (orientation-orientationm1) par les données de l'accéléromètre dorientation/dt*deltat
+        vrel=(M[theta][1]-Mm1[int((acos(v*deltat/M[theta][1]/(1-cos(theta*2*pi/360)/max(sin(theta*2*pi/360),0.01))))*360/(2*pi))][1])/deltat #approx de la derivee de la distance a l'objet par rapport au temps"   ATTENTION REMPLACER (orientation-orientationm1) par les donnees de l'accelerometre dorientation/dt*deltat
         
-        thetap=atan(mmmr[i][5]/mmmr[i][4]) #angle de coordonnées polaires du pt p attention c'est bien en angle cette fois"
-        rp=sqrt(mmmr[i][5]**2+mmmr[i][4]**2) #rayon de coordonnées polaires du pt p"
+        thetap=atan(mmmr[i][5]/mmmr[i][4]) #angle de coordonnees polaires du pt p attention c'est bien en angle cette fois"
+        rp=sqrt(mmmr[i][5]**2+mmmr[i][4]**2) #rayon de coordonnees polaires du pt p"
         if vrel<0:
-            rpprim=min(rp*v*cos(thetap)/(-vrel),rmax) #adaptation du rayon en fonction de la vitesse relative à la voituredu point qu'il désigne"
-            #on pourrait modifier le ryon en prenant aussi compte de l'accélération relative!
+            rpprim=min(rp*v*cos(thetap)/(-vrel),rmax) #adaptation du rayon en fonction de la vitesse relative a la voituredu point qu'il designe"
+            #on pourrait modifier le ryon en prenant aussi compte de l'acceleration relative!
         if vrel>=0:
             rp=sqrt(mmmr[i][5]**2+mmmr[i][4]**2)
             rpprim=rmax+rp

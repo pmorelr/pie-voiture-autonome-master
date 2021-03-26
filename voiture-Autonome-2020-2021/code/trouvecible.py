@@ -1,13 +1,10 @@
 from math import *
 from intersection import *
-import matplotlib.pyplot as plt
+import matplotlib as plt
 from elimineptsinaccessibles import *
 
 
 def trouvecible (MMMRC):
-    "MMMRC=[(thetai,ri,xi,yi,xpi ou xpprimi,ypi ou ypprimi)]"
-    "MMMRCT=[(thetai,ri,xi,yi,xpi ou xpprimi,ypi ou ypprimi,rpi)] trié par rpi croissant"
-    "segments=[(xpprimi,ypprimi,xpprimip1,ypprimip1)]"
     
     MMMRCT=[]
     
@@ -37,9 +34,9 @@ def trouvecible (MMMRC):
         j=0
         while j<len(segments) and intersection((xpi,ypi),segments[j])!=1:
             j+=1
-        if j==len(segments): #alors le pt pi trouvé une cible qui ne coupe aucun segment"
+        if j==len(segments): #alors le pt pi trouve une cible qui ne coupe aucun segment"
             return([xpi,ypi])
         i+=1
     print('ERREUR pas de cible optimale')
-    return([MMMRCT[0][4],MMMRCT[0][5]]) #gain en robustesse de toute facon c'est ce qu'il y à de mieux à faire! 
+    return([MMMRCT[0][4],MMMRCT[0][5]]) #gain en robustesse de toute facon c'est ce qu'il y a de mieux a faire! 
     

@@ -21,6 +21,29 @@ import time
 #def ConsigneRoues(Mm1,Vm1):
 
     #Mm1 et Vm1 sont la sortie lidar et la vitesse a l instant d avant
+    
+
+import RPi.GPIO as GPIO
+
+servo_pin = 18
+
+#Ajuste estes valores para obter o intervalo completo do movimento do servo
+deg_0_pulse   = 0.5 
+deg_180_pulse = 2.5
+f = 50.0
+
+# Faca alguns calculos dos parametros da largura do pulso
+period = 1000/f
+k      = 100/period
+deg_0_duty = deg_0_pulse*k
+pulse_range = deg_180_pulse - deg_0_pulse
+duty_range = pulse_range * k
+
+#Iniciar o pino gpio
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servo_pin,GPIO.OUT)
+pwm = GPIO.PWM(servo_pin,f)
+pwm.start(0)
 
 
 [positioninit, p2, orientationinit, o2, vinit, vi2, deltat,amaxlat,epsilonmax,amax,amin,tsb,l,larg,vmax,N,rv,m,alpha,lanti]=params()
@@ -51,8 +74,20 @@ while k<20:
     thetacible=atan((ycible)/(xcible))
     if xcible<0:
         thetacible=pi+atan(ycible/xcible)
+    
+    angle=thetacible*180/pi
 
-    print(thetacible*180/pi)
+    print(angle)
+    if angle>15:
+        duty = deg_0_duty + (110/180.0)* duty_range
+        pwm.ChangeDutyCycle(duty)
+    elif angle<-15:
+        duty = deg_0_duty + (70/180.0)* duty_range
+        pwm.ChangeDutyCycle(duty)
+    else:
+        duty = deg_0_duty + (90/180.0)* duty_range
+        pwm.ChangeDutyCycle(duty)
+        
     Mm1=M.copy()
     time.sleep(0.7)
     lidar = RPLidar('/dev/ttyUSB0')

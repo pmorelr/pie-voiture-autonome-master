@@ -3,14 +3,6 @@ import copy
 
 def zonesafe (M,rv,m):
     
-    "M=[(thetai,ri)] liste des tuples de coordonnées lidar attention theta i n'est pas un angle mais plutot un nb d'invcréments d'angle depuis la position de ref"
-    "rv=rayon du cercle circosncrit au véhicule"
-    "m=marge en plus du rayon du cercle circosncrit au véhicule"
-    "N=nb de pts que fait le lidar"
-    "MR=[(thetai,ri)] est la matrice lidar des points qui se trouvent dans les 180 degres qui correspondent à l'avant du véhicule"
-    "MMR=[(thetai,ri,xi,yi)]"
-    "MMMR=[(thetai,ri,xi,yi,xpi,ypi)] ou pi est tq le vecteur pipti est orthogonal au bord du circuit et de norme rv+m"
-    
     N=len(M)
     A=copy.deepcopy(M[0:int(N/4)])
     B=copy.deepcopy(M[int(3*N/4):N])
@@ -19,7 +11,7 @@ def zonesafe (M,rv,m):
     MR=copy.deepcopy(A+B) #deepcopy
     MMR=[]
     i=0
-    alphainc=360/N #valeur d'un incrément d'angle
+    alphainc=360/N #valeur d'un increment d'angle
     while i<len(MR):
         theta=MR[i][0]
         r=MR[i][1]
@@ -45,11 +37,11 @@ def zonesafe (M,rv,m):
         
             xp1=xi+(rv+m)/sqrt(1+K**2) 
             yp1=yi+K*(rv+m)/sqrt(1+K**2)
-        #abscisse et ordonnée du pt sur la droite ortho au bord du circuit au pt i distant de rv+m du pt i du coté 1
+        #abscisse et ordonnee du pt sur la droite ortho au bord du circuit au pt i distant de rv+m du pt i du cote 1
         
             xp2=xi-(rv+m)/sqrt(1+K**2)
             yp2=yi-K*(rv+m)/sqrt(1+K**2)
-        #abscisse et ordonnée du pt sur la droite ortho au bord du circuit au pt i distant de rv+m du pt i du coté 2
+        #abscisse et ordonnee du pt sur la droite ortho au bord du circuit au pt i distant de rv+m du pt i du cote 2
         if abs(yip1-yim1)<0.00001:
             yp1=yi+rv+m
             yp2=yi-(rv+m)
