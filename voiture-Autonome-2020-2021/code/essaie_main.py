@@ -15,6 +15,7 @@ from lecture_lidar import *
 from rplidar import RPLidar
 from init_lidar import *
 from evite_murs import *
+from traitement import *
 import time
 
 import RPi.GPIO as GPIO
@@ -68,6 +69,7 @@ for scan in lidar.iter_scans(500,10):
     for j in range(len(X)):
         map[min(int(X[j][1])-1,359)][1]=X[j][2]
     i+=1
+    map=traitement(map)
     if i>tours_init:
         Mm1=map.copy()
         M=map.copy()
@@ -90,8 +92,9 @@ for scan in lidar.iter_scans(500,10):
         #print(map[int(angle+10)])
         angle=evite_coins(angle,35,200,map)
         angle=evite_murs(angle,200,map)
-        
+        obst=0
         obst=int(evite_obstacle(angle,M))
+        
         if obst!=0:
             print("obstacle")
             for j in range(int(abs(angle)),179):
@@ -114,6 +117,8 @@ for scan in lidar.iter_scans(500,10):
         print(angle)
         if not isnan(angle):
             print(map[int(angle)][1])
+        
+        angle=angle/abs(angle)*25*(1-exp(-angle*angle/800))
         
         angle_consigne=min(max(angle,-25),25)
         consigne=60*((angle_consigne+25)/50+1)
