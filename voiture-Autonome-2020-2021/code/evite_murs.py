@@ -12,15 +12,15 @@ def evite_coins(angle_cible,eps,larg,map):
 	if map[int(angle_cible)-eps][1]<map[int(angle_cible)][1]-1000:
 		#return angle_cible+m.atan(larg/map[int(angle_cible)-eps][1])
 		if map[int(angle_cible)-eps][1]<2000:
-			return angle_cible+25
+			return angle_cible+15
 		else:
-			return angle_cible+10
+			return angle_cible+5
 	if map[int(angle_cible)+eps][1]<map[int(angle_cible)][1]-1000:
 		#return angle_cible-m.atan(larg/map[int(angle_cible)+eps][1])
 		if map[int(angle_cible)+eps][1]<2000:
-			return angle_cible-25
+			return angle_cible-15
 		else:
-			return angle_cible-10
+			return angle_cible-5
 	return angle_cible
 	
 def evite_murs(angle_cible,delta,map):
