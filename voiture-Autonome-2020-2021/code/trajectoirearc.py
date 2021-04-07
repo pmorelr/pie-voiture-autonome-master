@@ -57,7 +57,7 @@ def trajectoirearc(P):
     
     MMMR1=zonesafe(M1,rv,m)
      
-    MMMRC1=adaptevitesserelat (Mm11,M1,MMMR1,alpha,v1,deltat,lanti,orientation1,orientationm11)
+    MMMRC1=adaptevitesserelat (Mm11,M1,MMMR1,alpha,v1,deltat,lanti)
     cible1,R1,sgyp,evitement,Rimpact=trouveciblearc(MMMRC1,v1)
     xciblec1=cible1[0]  
     yciblec1=cible1[1]
@@ -76,7 +76,7 @@ def trajectoirearc(P):
     
     MMMR2=zonesafe(M2,rv,m)
     
-    MMMRC2=adaptevitesserelat (Mm12,M2,MMMR2,alpha,v2,deltat,lanti,orientation2,orientationm12)
+    MMMRC2=adaptevitesserelat (Mm12,M2,MMMR2,alpha,v2,deltat,lanti)
     cible2=trouvecible(MMMRC2)
     obj2=objectif(cible2,v2,deltat)
     R2=calculrayoncourbure(obj2)
@@ -111,7 +111,7 @@ def trajectoirearc(P):
         envir1=environment3(position2,orientation2,j)
         M1=lidar(envir1,position1,orientation1,N)
         MMMR1=zonesafe(M1,rv,m)
-        MMMRC1=adaptevitesserelat (Mm11,M1,MMMR1,alpha,v1,deltat,lanti,orientation1,orientationm11)
+        MMMRC1=adaptevitesserelat (Mm11,M1,MMMR1,alpha,v1,deltat,lanti)
         cible1,R1,sgyp,evitement,Rimpact=trouveciblearc(MMMRC1,v1)
         obj1=objectif(cible1,v1,deltat)
     
@@ -127,7 +127,7 @@ def trajectoirearc(P):
         envir2=environment3(position1,orientation1,j)
         M2=lidar(envir2,position2,orientation2,N)
         MMMR2=zonesafe(M2,rv,m)
-        MMMRC2=adaptevitesserelat (Mm12,M2,MMMR2,alpha,v2,deltat,lanti,orientation2,orientationm12)
+        MMMRC2=adaptevitesserelat (Mm12,M2,MMMR2,alpha,v2,deltat,lanti)
         cible2=trouvecible(MMMRC2)
         obj2=objectif(cible2,v2,deltat)
         R2=calculrayoncourbure(obj2)
